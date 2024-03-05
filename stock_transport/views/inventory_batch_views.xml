@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_picking_batch_form_view" model="ir.ui.view">
+        <field name="name">stock.picking.batch.form</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='scheduled_date']" position="after">
+                <field name="dock_id"/>
+                <field name="vehicle_id"/>
+                <field name="vehicle_category_id" placeholder="Semi-Truck (250kg, 30m cube)"/>
+                <field name="volume"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="stock_tranport_stock_picking_view_tree" model="ir.ui.view">
+        <field name="name">model.name.view.tree.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='scheduled_date']" position="after">
+                <field name="volume" />
+                <field name="weight" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

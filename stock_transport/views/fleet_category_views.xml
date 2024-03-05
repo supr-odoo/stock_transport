@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fleet_category_views_inherited" model="ir.ui.view">
+        <field name="name">fleet.category.views.inherit</field>
+        <field name="model">fleet.vehicle.model.category</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_model_category_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="max_weight"/>
+                <field name="max_volume"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="fleet_category_form_view" model="ir.ui.view">
+        <field name="name">fleet.category.form.view</field>
+        <field name="model">fleet.vehicle.model.category</field>
+        <field name="arch" type="xml">
+            <form string="Model Category">
+                <sheet>
+                    <group>
+                        <field name="max_weight"/>
+                        <field name="max_volume"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
