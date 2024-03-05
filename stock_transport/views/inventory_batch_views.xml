@@ -9,10 +9,37 @@
                 <field name="dock_id"/>
                 <field name="vehicle_id"/>
                 <field name="vehicle_category_id" placeholder="Semi-Truck (250kg, 30m cube)"/>
-                <field name="volume"/>
+                <field name="volume" widget="progressbar" />
+                <field name="weight" widget="progressbar"/>
             </xpath>
         </field>
     </record>
+    <record id="stock_picking_batch_graph_view" model="ir.ui.view">
+        <field name="name">stock.picking.batch.graph</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="arch" type="xml">
+            <graph string="Volume and Weight Overview" type="bar">
+                <field name="scheduled_date" interval="day" type="row" string="Scheduled Date"/>
+                <field name="vehicle_category_id" type="col" string="Vehicle Category"/>
+                <field name="volume" type="measure" string="Volume"/>
+                <field name="weight" type="measure" string="Weight"/>
+                <field name="transfers" type="measure" string="Transfers"/>
+                <field name="lines" type="measure" string="Lines"/>
+            </graph>
+        </field>
+    </record>
+    <record id="stock_transport_view_batch_view_gantt" model="ir.ui.view">
+        <field name="name">stock_transport.batch.view.gantt</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="arch" type="xml">
+            <gantt date_start="create_date" date_stop="scheduled_date" scales="day,week,month,year" default_group_by="name,vehicle_id" default_scale="week" color="vehicle_id" pill_label="True">
+                <!-- <field name="state"></field> -->
+                <!-- <field name="vehicle_category_id"></field> -->
+                <field name="weight"></field>
+            </gantt>
+        </field>
+    </record>
+
     <record id="stock_tranport_stock_picking_view_tree" model="ir.ui.view">
         <field name="name">model.name.view.tree.inherit</field>
         <field name="model">stock.picking</field>
@@ -20,8 +47,12 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='scheduled_date']" position="after">
                 <field name="volume" />
-                <field name="weight" />
             </xpath>
         </field>
+    </record>
+    <record id="stock_picking_batch.stock_picking_batch_action" model="ir.actions.act_window">
+        <field name="name">Stock Picking Batch Graph</field>
+        <field name="res_model">stock.picking.batch</field>
+        <field name="view_mode">tree,kanban,form,graph,gantt</field>
     </record>
 </odoo>

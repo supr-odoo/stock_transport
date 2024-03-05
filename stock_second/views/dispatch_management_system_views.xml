@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">your.inherited.view.name</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='stock_move_email']" position="after">
+                <label for="module_stock_transport" class="o_form_label">
+                    <strong>Install Stock Transport Module</strong>
+                </label>
+                <field name="module_stock_transport" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
