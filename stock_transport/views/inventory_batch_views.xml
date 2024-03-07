@@ -8,7 +8,7 @@
             <xpath expr="//field[@name='scheduled_date']" position="after">
                 <field name="dock_id"/>
                 <field name="vehicle_id"/>
-                <field name="vehicle_category_id" placeholder="Semi-Truck (250kg, 30m cube)"/>
+                <field name="vehicle_category_id" placeholder="Semi-Truck (250kg, 30m³)"/>
                 <field name="volume" widget="progressbar" />
                 <field name="weight" widget="progressbar"/>
             </xpath>
@@ -21,10 +21,10 @@
             <graph string="Volume and Weight Overview" type="bar">
                 <field name="scheduled_date" interval="day" type="row" string="Scheduled Date"/>
                 <field name="vehicle_category_id" type="col" string="Vehicle Category"/>
-                <field name="volume" type="measure" string="Volume"/>
-                <field name="weight" type="measure" string="Weight"/>
-                <field name="transfers" type="measure" string="Transfers"/>
-                <field name="lines" type="measure" string="Lines"/>
+                <field name="volume_graph" string="Volume Graph"/>
+                <field name="weight_graph" string="Weight Graph"/>
+                <field name="transfers" string="Transfers"/>
+                <field name="lines" string="Lines"/>
             </graph>
         </field>
     </record>
@@ -32,27 +32,17 @@
         <field name="name">stock_transport.batch.view.gantt</field>
         <field name="model">stock.picking.batch</field>
         <field name="arch" type="xml">
-            <gantt date_start="create_date" date_stop="scheduled_date" scales="day,week,month,year" default_group_by="name,vehicle_id" default_scale="week" color="vehicle_id" pill_label="True">
-                <!-- <field name="state"></field> -->
-                <!-- <field name="vehicle_category_id"></field> -->
+            <gantt date_start="create_date" date_stop="scheduled_date" scales="day,week,month,year" default_group_by="vehicle_id" decoration-info="state == 'draft'" string="Schedule" default_scale="week" color="vehicle_id" thumbnails="{'user_id':'image_1920'}">
+                <field name="state"></field>
+                <field name="volume"></field>
                 <field name="weight"></field>
             </gantt>
         </field>
     </record>
 
-    <record id="stock_tranport_stock_picking_view_tree" model="ir.ui.view">
-        <field name="name">model.name.view.tree.inherit</field>
-        <field name="model">stock.picking</field>
-        <field name="inherit_id" ref="stock.vpicktree"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='scheduled_date']" position="after">
-                <field name="volume" />
-            </xpath>
-        </field>
-    </record>
     <record id="stock_picking_batch.stock_picking_batch_action" model="ir.actions.act_window">
-        <field name="name">Stock Picking Batch Graph</field>
+        <field name="name">Batch Transfers</field>
         <field name="res_model">stock.picking.batch</field>
-        <field name="view_mode">tree,kanban,form,graph,gantt</field>
+        <field name="view_mode">tree,form,kanban,graph,gantt</field>
     </record>
 </odoo>
